@@ -1,0 +1,13 @@
+{
+  "/admin/dashboard/page": "app/admin/dashboard/page.js",
+  "/candidate/applications/page": "app/candidate/applications/page.js",
+  "/candidate/cv/page": "app/candidate/cv/page.js",
+  "/candidate/dashboard/page": "app/candidate/dashboard/page.js",
+  "/jobs/[id]/page": "app/jobs/[id]/page.js",
+  "/jobs/page": "app/jobs/page.js",
+  "/page": "app/page.js",
+  "/recruiter/dashboard/page": "app/recruiter/dashboard/page.js",
+  "/recruiter/jobs/[id]/page": "app/recruiter/jobs/[id]/page.js",
+  "/recruiter/jobs/[id]/ranking/page": "app/recruiter/jobs/[id]/ranking/page.js",
+  "/recruiter/jobs/page": "app/recruiter/jobs/page.js"
+}
