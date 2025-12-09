@@ -4,6 +4,12 @@ A complete frontend-only recruitment platform featuring role-based navigation fo
 
 ## Features
 
+### Authentication
+- **Login/Register** - Email and password authentication
+- **Google OAuth** - Sign in with Google (optional, requires Google Client ID)
+- **Role-based Access** - Protected routes for candidates, recruiters, and admins
+- **Session Management** - Simple localStorage-based session (no tokens required)
+
 ### Candidate Portal
 - **Dashboard** - View ATS score, applications, and quick stats
 - **CV Management** - Upload and manage CV with ATS scoring
@@ -81,15 +87,29 @@ All data is stored in `lib/mock-data.ts`:
 ## Getting Started
 
 1. **Install dependencies**: The project uses auto-detected npm modules
-2. **Run development server**: `npm run dev` or `pnpm dev`
-3. **Open in browser**: Navigate to `http://localhost:3000`
+2. **Configure Google OAuth (Optional)**: 
+   - Create a `.env.local` file in the root directory
+   - Add `NEXT_PUBLIC_GOOGLE_CLIENT_ID=your_google_client_id_here`
+   - To get a Google Client ID:
+     - Go to [Google Cloud Console](https://console.cloud.google.com/)
+     - Create a new project or select an existing one
+     - Enable Google+ API
+     - Create OAuth 2.0 Client ID
+     - Add authorized JavaScript origins: `http://localhost:3000` (for development)
+3. **Run development server**: `npm run dev` or `pnpm dev`
+4. **Open in browser**: Navigate to `http://localhost:3000`
+5. **Login/Register**: 
+   - Click "Đăng nhập" or "Đăng ký" in the navigation
+   - Or use the role selection buttons on the landing page
 
 ## Navigation
 
-- **Landing Page** (`/`) - Choose your role
-- **Candidate Path** - `/candidate/dashboard`
-- **Recruiter Path** - `/recruiter/dashboard`
-- **Admin Path** - `/admin/dashboard`
+- **Landing Page** (`/`) - Choose your role or login/register
+- **Login** (`/login`) - Sign in with email/password or Google
+- **Register** (`/register`) - Create new account (Candidate or Recruiter)
+- **Candidate Path** - `/candidate/dashboard` (requires login as candidate)
+- **Recruiter Path** - `/recruiter/dashboard` (requires login as recruiter)
+- **Admin Path** - `/admin/dashboard` (requires login as admin)
 
 ## Design System
 

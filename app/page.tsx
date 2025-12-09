@@ -12,7 +12,17 @@ export default function LandingPage() {
       <nav className="border-b border-white/20 backdrop-blur-2xl bg-white/60 dark:bg-slate-900/70 sticky top-0 z-40">
         <div className="w-full px-4 sm:px-6 lg:px-12 2xl:px-16 py-4 flex items-center justify-between">
           <div className="text-2xl font-bold text-foreground tracking-tight">SmartRecruit</div>
-          <div className="text-sm text-muted-foreground">AI-Powered Recruitment Platform</div>
+          <div className="flex items-center gap-4">
+            <div className="text-sm text-muted-foreground hidden sm:block">AI-Powered Recruitment Platform</div>
+            <div className="flex items-center gap-2">
+              <Link href="/login">
+                <Button variant="ghost" size="sm">Đăng nhập</Button>
+              </Link>
+              <Link href="/register">
+                <Button size="sm">Đăng ký</Button>
+              </Link>
+            </div>
+          </div>
         </div>
       </nav>
 
@@ -28,13 +38,13 @@ export default function LandingPage() {
               SmartRecruit là nền tảng tìm kiếm việc làm và tuyển dụng thông minh. Với AI tiên tiến, ứng viên được đánh giá CV chi tiết, highlight lỗi và gợi ý cải thiện. Nhà tuyển dụng tự động xếp hạng CV phù hợp nhất với JD.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
-              <Link href="/candidate/dashboard">
+              <Link href="/login">
                 <Button size="lg" className="w-full sm:w-auto shadow-[0_20px_60px_-30px_rgba(56,197,185,0.8)]">
                   Tôi là Ứng viên
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </Link>
-              <Link href="/recruiter/dashboard">
+              <Link href="/login">
                 <Button
                   size="lg"
                   variant="outline"
@@ -42,11 +52,6 @@ export default function LandingPage() {
                 >
                   Tôi là Nhà tuyển dụng
                   <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
-              <Link href="/admin/dashboard">
-                <Button size="lg" variant="ghost" className="w-full sm:w-auto">
-                  Admin Dashboard
                 </Button>
               </Link>
             </div>
@@ -191,12 +196,12 @@ export default function LandingPage() {
           <h2 className="text-3xl font-bold mb-6">Sẵn sàng bắt đầu?</h2>
           <p className="text-lg text-muted-foreground mb-8">Chọn vai trò và trải nghiệm tuyển dụng hiện đại</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/candidate/dashboard">
+            <Link href="/register">
               <Button size="lg" className="w-full sm:w-auto">
                 Bắt đầu với tư cách Ứng viên
               </Button>
             </Link>
-            <Link href="/recruiter/dashboard">
+            <Link href="/register">
               <Button size="lg" variant="outline" className="w-full sm:w-auto bg-transparent">
                 Bắt đầu với tư cách Nhà tuyển dụng
               </Button>

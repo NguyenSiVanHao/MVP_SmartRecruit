@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import { Analytics } from "@vercel/analytics/next"
 import { Geist, Geist_Mono } from "next/font/google"
+import { AuthProvider } from "@/lib/auth-context"
 import "./globals.css"
 
 const fontSans = Geist({ subsets: ["latin"], variable: "--font-sans" })
@@ -37,7 +38,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <body
         className={`${fontSans.variable} ${fontMono.variable} font-sans antialiased text-[20px] md:text-[20px] bg-[radial-gradient(circle_at_20%_20%,rgba(56,197,185,0.18),transparent_38%),radial-gradient(circle_at_80%_0%,rgba(94,234,212,0.18),transparent_32%),radial-gradient(circle_at_50%_100%,rgba(56,197,185,0.12),transparent_40%)]`}
       >
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
         <Analytics />
       </body>
     </html>
