@@ -9,6 +9,8 @@ node_modules/
 
 # Next.js
 /.next/
+.next
+
 /out/
 
 # Production
@@ -63,4 +65,5 @@ logs
 # Temporary files
 *.tmp
 *.temp
+
 

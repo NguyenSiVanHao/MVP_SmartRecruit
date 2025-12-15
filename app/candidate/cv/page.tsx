@@ -217,13 +217,12 @@ export default function CVPage() {
 
       {/* Main Content Tabs */}
       <Tabs defaultValue={jobId ? "analysis" : "preview"} className="w-full">
-        <TabsList className="grid w-full grid-cols-3">
+        <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="preview">CV Preview</TabsTrigger>
           <TabsTrigger value="analysis" className="flex items-center gap-2">
             <Sparkles className="h-4 w-4" />
-            AI Analysis {job && <Badge variant="secondary" className="ml-1">JD Match</Badge>}
+            AI Analysis My CV {job && <Badge variant="secondary" className="ml-1">JD Match</Badge>}
           </TabsTrigger>
-          <TabsTrigger value="tips">Optimization Tips</TabsTrigger>
         </TabsList>
 
         {/* Preview Tab */}
@@ -322,47 +321,6 @@ export default function CVPage() {
               </CardContent>
             </Card>
           )}
-        </TabsContent>
-
-        {/* Tips Tab */}
-        <TabsContent value="tips" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>ATS Optimization Tips</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="border-l-4 border-primary pl-4 py-2">
-                <h4 className="font-semibold text-foreground mb-1">1. Use Clear Section Headers</h4>
-                <p className="text-sm text-muted-foreground">
-                  Use standard sections like "Experience", "Education", "Skills" for better ATS parsing
-                </p>
-              </div>
-              <div className="border-l-4 border-primary pl-4 py-2">
-                <h4 className="font-semibold text-foreground mb-1">2. Keywords Matter</h4>
-                <p className="text-sm text-muted-foreground">
-                  Include relevant keywords from job descriptions naturally throughout your CV
-                </p>
-              </div>
-              <div className="border-l-4 border-primary pl-4 py-2">
-                <h4 className="font-semibold text-foreground mb-1">3. Quantify Achievements</h4>
-                <p className="text-sm text-muted-foreground">
-                  Use numbers and metrics: "Increased sales by 25%", "Led team of 8 engineers"
-                </p>
-              </div>
-              <div className="border-l-4 border-primary pl-4 py-2">
-                <h4 className="font-semibold text-foreground mb-1">4. Avoid Fancy Formatting</h4>
-                <p className="text-sm text-muted-foreground">
-                  Skip graphics, tables, and unusual fonts. Use simple, clean formatting
-                </p>
-              </div>
-              <div className="border-l-4 border-primary pl-4 py-2">
-                <h4 className="font-semibold text-foreground mb-1">5. Use Standard Font</h4>
-                <p className="text-sm text-muted-foreground">
-                  Stick to common fonts like Arial, Calibri, or Times New Roman
-                </p>
-              </div>
-            </CardContent>
-          </Card>
         </TabsContent>
       </Tabs>
     </div>

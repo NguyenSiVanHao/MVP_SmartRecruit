@@ -7,7 +7,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { CVAnalysisPanel } from "@/components/ai/cv-analysis-panel"
 import { mockJobs, mockCandidates } from "@/lib/mock-data"
+import { analyzeCVWithAI, type CVAnalysis } from "@/lib/ai-utils"
 import {
   MapPin,
   Briefcase,
@@ -31,6 +34,9 @@ export default function JobDetailPage() {
   const job = mockJobs.find((j) => j.id === params.id)
   const [hasApplied, setHasApplied] = useState(false)
   const [selectedCV, setSelectedCV] = useState<string | null>(null)
+  const [isAnalysisDialogOpen, setIsAnalysisDialogOpen] = useState(false)
+  const [cvAnalysis, setCVAnalysis] = useState<CVAnalysis | null>(null)
+  const [isAnalyzing, setIsAnalyzing] = useState(false)
 
   if (!job) {
     return (
@@ -47,6 +53,57 @@ export default function JobDetailPage() {
         setHasApplied(false)
         setSelectedCV(null)
       }, 3000)
+    }
+  }
+
+  const handleAIAnalysis = async () => {
+    const cvId = selectedCV || mockCandidates[0]?.id
+    const candidate = mockCandidates.find(c => c.id === cvId)
+    
+    if (!candidate || !job) return
+
+    setIsAnalysisDialogOpen(true)
+    setIsAnalyzing(true)
+    
+    try {
+      const jobDescription = `
+        Position: ${job.title}
+        Company: ${job.company}
+        Description: ${job.description}
+        Requirements: ${job.requirements.join(", ")}
+        Required Skills: ${job.skills.join(", ")}
+      `
+      const analysis = await analyzeCVWithAI(candidate.cv, jobDescription)
+      setCVAnalysis(analysis)
+    } catch (error) {
+      console.error("Error analyzing CV:", error)
+    } finally {
+      setIsAnalyzing(false)
+    }
+  }
+
+  const handleReanalyze = async () => {
+    const cvId = selectedCV || mockCandidates[0]?.id
+    const candidate = mockCandidates.find(c => c.id === cvId)
+    
+    if (!candidate || !job) return
+
+    setIsAnalyzing(true)
+    
+    try {
+      const jobDescription = `
+        Position: ${job.title}
+        Company: ${job.company}
+        Description: ${job.description}
+        Requirements: ${job.requirements.join(", ")}
+        Required Skills: ${job.skills.join(", ")}
+      `
+      const analysis = await analyzeCVWithAI(candidate.cv, jobDescription)
+      setCVAnalysis(analysis)
+    } catch (error) {
+      console.error("Error analyzing CV:", error)
+    } finally {
+      setIsAnalyzing(false)
     }
   }
 
@@ -346,15 +403,15 @@ export default function JobDetailPage() {
                     <Button className="flex-1" disabled={!selectedCV} onClick={handleApply}>
                       Apply with CV
                     </Button>
-                    <Link href={`/candidate/cv?jobId=${job.id}&cvId=${selectedCV || mockCandidates[0]?.id}`}>
-                      <Button
-                        variant="outline"
-                        className="bg-transparent border-primary text-primary hover:bg-primary/10"
-                        title="AI Match CV with Job Requirements - Analyze CV against JD"
-                      >
-                        <Sparkles className="h-4 w-4" />
-                      </Button>
-                    </Link>
+                    <Button
+                      variant="outline"
+                      className="bg-transparent border-primary text-primary hover:bg-primary/10"
+                      title="AI Match CV with Job Requirements - Analyze CV against JD"
+                      onClick={handleAIAnalysis}
+                      disabled={!selectedCV}
+                    >
+                      <Sparkles className="h-4 w-4" />
+                    </Button>
                   </div>
                 </>
               )}
@@ -428,6 +485,40 @@ export default function JobDetailPage() {
           )}
         </div>
       </div>
+
+      {/* AI Analysis Dialog */}
+      <Dialog open={isAnalysisDialogOpen} onOpenChange={setIsAnalysisDialogOpen}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Sparkles className="h-5 w-5 text-primary" />
+              AI CV Analysis - {job.title}
+            </DialogTitle>
+            <DialogDescription>
+              AI-powered CV analysis matched against job requirements at {job.company}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="mt-4">
+            {isAnalyzing && !cvAnalysis ? (
+              <div className="flex flex-col items-center justify-center py-12">
+                <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent mb-4" />
+                <p className="text-muted-foreground">Analyzing your CV against job requirements...</p>
+              </div>
+            ) : cvAnalysis ? (
+              <CVAnalysisPanel 
+                analysis={cvAnalysis} 
+                isLoading={isAnalyzing} 
+                onReanalyze={handleReanalyze}
+              />
+            ) : (
+              <div className="text-center py-8 text-muted-foreground">
+                <Sparkles className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                <p>Click analyze to get AI-powered insights</p>
+              </div>
+            )}
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   )
 }
